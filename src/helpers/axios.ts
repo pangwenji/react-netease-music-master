@@ -4,40 +4,40 @@ import { SERVER } from 'constants/server'
 
 const TIMEOUT = 40000
 const MIME_TYPE: IDictionary<ResponseType> = {
-  JSON: 'json',
+    JSON: 'json',
 }
 
 const createInstance = () => {
-  const instance = axios.create({
-    baseURL: SERVER,
-    withCredentials: true,
-    timeout: TIMEOUT,
-    responseType: MIME_TYPE.JSON,
-  })
+    const instance = axios.create({
+        baseURL: SERVER,
+        withCredentials: true,
+        timeout: TIMEOUT,
+        responseType: MIME_TYPE.JSON,
+    })
 
-  instance.interceptors.response.use(handleResponse, handleError)
+    instance.interceptors.response.use(handleResponse, handleError)
 
-  return instance
+    return instance
 }
 
 const handleResponse = (response: any) => {
-  return response.data
+    return response.data
 }
 
 const handleError = (error: any) => {
-  const { response, message } = error
-  return Promise.reject(response ? new Error(response.data.message || message) : error)
+    const { response, message } = error
+    return Promise.reject(response ? new Error(response.data.message || message) : error)
 }
 
 const toastError = (error: any) => {
-  const { response, message } = error
-  console.error(error)
-  toaster.error(response?.data?.message || message)
-  return Promise.reject(error)
+    const { response, message } = error
+    console.error(error)
+    toaster.error(response?.data?.message || message)
+    return Promise.reject(error)
 }
 
 interface Instance extends AxiosInstance {
-  (config: AxiosRequestConfig): Promise<any>
+    (config: AxiosRequestConfig): Promise<any>
 }
 export const requestWithoutErrorToast: Instance = createInstance()
 

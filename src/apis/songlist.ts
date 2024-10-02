@@ -10,70 +10,70 @@ type GetHighQualitySonglistFn = (cat?: string) => Promise<ISonglist>
 type GetUserSonglistFn = (uid: number) => Promise<{ create: ISonglist[]; collect: ISonglist[] }>
 
 const getSonglists: GetSonglistsFn = async ({ cat, order, limit = PAGE_SIZE, offset }) => {
-  const response = await axios({
-    url: '/top/playlist',
-    params: {
-      cat,
-      order,
-      limit,
-      offset,
-    },
-  })
+    const response = await axios({
+        url: '/top/playlist',
+        params: {
+            cat,
+            order,
+            limit,
+            offset,
+        },
+    })
 
-  return response
+    return response
 }
 
 const getSonglistCats: GetSonglistCatsFn = async () => {
-  const response = await axios({
-    url: '/playlist/catlist',
-  })
+    const response = await axios({
+        url: '/playlist/catlist',
+    })
 
-  return response
+    return response
 }
 
 const getSonglistHotCats: GetSonglistHotCatsFn = async () => {
-  const response = await axios({
-    url: '/playlist/hot',
-  })
+    const response = await axios({
+        url: '/playlist/hot',
+    })
 
-  return response.tags
+    return response.tags
 }
 
 const getHighQualitySonglist: GetHighQualitySonglistFn = async (cat = '全部') => {
-  const response = await axios({
-    url: '/top/playlist/highquality',
-    params: {
-      limit: 1,
-      cat,
-    },
-  })
+    const response = await axios({
+        url: '/top/playlist/highquality',
+        params: {
+            limit: 1,
+            cat,
+        },
+    })
 
-  return response?.playlists?.[0]
+    return response?.playlists?.[0]
 }
 
 const getUserSonglist: GetUserSonglistFn = async (uid) => {
-  const response = await axios({
-    url: '/user/playlist',
-    params: {
-      uid,
-      limit: PAGE_SIZE,
-    },
-  })
+    const response = await axios({
+        url: '/user/playlist',
+        params: {
+            uid,
+            limit: PAGE_SIZE,
+        },
+    })
 
-  const playlist: ISonglist[] = response.playlist || []
-  const create = playlist.filter(({ creator }) => uid === creator.userId)
-  const collect = playlist.filter(({ creator }) => uid !== creator.userId)
+    const playlist: ISonglist[] = response.playlist || []
+    const create = playlist.filter(({ creator }) => uid === creator.userId)
+    const collect = playlist.filter(({ creator }) => uid !== creator.userId)
 
-  return {
-    create,
-    collect,
-  }
+    return {
+        create,
+        collect,
+    }
 }
 
 export default {
-  getSonglists,
-  getSonglistCats,
-  getSonglistHotCats,
-  getHighQualitySonglist,
-  getUserSonglist,
+    getSonglists,
+    getSonglistCats,
+    getSonglistHotCats,
+    getHighQualitySonglist,
+    getUserSonglist,
 }

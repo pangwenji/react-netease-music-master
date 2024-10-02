@@ -12,19 +12,19 @@ import styles from './style.module.css'
 const { useEffect } = React
 
 const Songlist = () => {
-  const [state, personalizedSonglistFn] = useAsyncFn(personalizedApis.getPersonalizedSonglist)
-  const { value: songlist = [], loading: isGettingSonglist } = state || {}
+    const [state, personalizedSonglistFn] = useAsyncFn(personalizedApis.getPersonalizedSonglist)
+    const { value: songlist = [], loading: isGettingSonglist } = state || {}
 
-  useEffect(() => {
-    personalizedSonglistFn({ limit: 10 })
-  }, [])
+    useEffect(() => {
+        personalizedSonglistFn({ limit: 10 })
+    }, [])
 
-  return (
-    <div className={styles.root}>
-      <LinkTitle title='推荐歌单' route={ROUTES.SONG_LIST} />
-      {isGettingSonglist ? <Spinner /> : <Songlists data={songlist} />}
-    </div>
-  )
+    return (
+        <div className={styles.root}>
+            <LinkTitle title='推荐歌单' route={ROUTES.SONG_LIST} />
+            {isGettingSonglist ? <Spinner /> : <Songlists data={songlist} />}
+        </div>
+    )
 }
 
 export default Songlist

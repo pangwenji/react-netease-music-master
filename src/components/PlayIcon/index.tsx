@@ -5,15 +5,15 @@ import cn from 'classnames'
 import styles from './style.module.css'
 
 interface IProps {
-  className?: string
+    className?: string
 }
 
 const PlayIcon: React.FC<IProps> = ({ className }) => {
-  return (
-    <div className={cn(styles.root, className)}>
-      <Icon icon='play' />
-    </div>
-  )
+    return (
+        <div className={cn(styles.root, className)}>
+            <Icon icon='play' />
+        </div>
+    )
 }
 
 export default PlayIcon

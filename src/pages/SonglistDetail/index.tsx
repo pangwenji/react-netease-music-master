@@ -16,84 +16,84 @@ import styles from './style.module.css'
 const { useEffect, useContext } = React
 
 const TABS = [
-  {
-    label: '歌曲列表',
-    key: 'songlist',
-  },
-  {
-    label: '评论',
-    key: 'comment',
-  },
+    {
+        label: '歌曲列表',
+        key: 'songlist',
+    },
+    {
+        label: '评论',
+        key: 'comment',
+    },
 ]
 
 const SonglistDetail = () => {
-  const dispatch = useContext(PlayMusicDispatchContext)
-  const params = useParams<IDictionary<string>>()
-  const { songlistId } = params
+    const dispatch = useContext(PlayMusicDispatchContext)
+    const params = useParams<IDictionary<string>>()
+    const { songlistId } = params
 
-  const [getSonglistDetailGql, { loading, data }] = useLazyQuery(getSonglistDetail, {
-    onError: (error) => {
-      message.error(error.message)
-    },
-  })
-
-  const result = data?.getSonglistDetail
-  const songs = result?.songs as IMusic[]
-
-  useEffect(() => {
-    getSonglistDetailGql({
-      variables: {
-        id: songlistId,
-      },
-    })
-  }, [songlistId])
-
-  const playAll = (autoPlay?: boolean) => {
-    const list = songs.map((item) => {
-      return createMusic({
-        ...item,
-        duration: item.duration / 1000,
-      })
-    })
-
-    dispatch({
-      type: ACTIONS.SET_PLAY_LIST,
-      payload: {
-        playList: list,
-      },
-    })
-
-    if (autoPlay) {
-      dispatch({
-        type: ACTIONS.PLAY,
-        payload: {
-          musicId: list[0].id,
-          music: list[0],
+    const [getSonglistDetailGql, { loading, data }] = useLazyQuery(getSonglistDetail, {
+        onError: (error) => {
+            message.error(error.message)
         },
-      })
+    })
+
+    const result = data?.getSonglistDetail
+    const songs = result?.songs as IMusic[]
+
+    useEffect(() => {
+        getSonglistDetailGql({
+            variables: {
+                id: songlistId,
+            },
+        })
+    }, [songlistId])
+
+    const playAll = (autoPlay?: boolean) => {
+        const list = songs.map((item) => {
+            return createMusic({
+                ...item,
+                duration: item.duration / 1000,
+            })
+        })
+
+        dispatch({
+            type: ACTIONS.SET_PLAY_LIST,
+            payload: {
+                playList: list,
+            },
+        })
+
+        if (autoPlay) {
+            dispatch({
+                type: ACTIONS.PLAY,
+                payload: {
+                    musicId: list[0].id,
+                    music: list[0],
+                },
+            })
+        }
     }
-  }
 
-  return (
-    <div className={styles.root}>
-      {loading ? (
-        <Spinner className='spinner' />
-      ) : (
-        <>
-          <div className={styles.basicInfo}>
-            <BasicInfo data={result?.songlist} onPlayAll={playAll} />
-          </div>
+    return (
+        <div className={styles.root}>
+            {loading ? (
+                <Spinner className='spinner' />
+            ) : (
+                <>
+                    <div className={styles.basicInfo}>
+                        <BasicInfo data={result?.songlist} onPlayAll={playAll} />
+                    </div>
 
-          <div className={styles.content}>
-            <div className={styles.tabs}>
-              <Tabs tabs={TABS} />
-            </div>
-            <MusicList data={songs} onPlayAll={playAll} />
-          </div>
-        </>
-      )}
-    </div>
-  )
+                    <div className={styles.content}>
+                        <div className={styles.tabs}>
+                            <Tabs tabs={TABS} />
+                        </div>
+                        <MusicList data={songs} onPlayAll={playAll} />
+                    </div>
+                </>
+            )}
+        </div>
+    )
 }
 
 export default SonglistDetail

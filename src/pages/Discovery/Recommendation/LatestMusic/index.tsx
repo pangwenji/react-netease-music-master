@@ -13,34 +13,50 @@ import styles from './style.module.css'
 const { useEffect } = React
 
 const LatestMusic = () => {
-  const [state, getPersonalizedNewMusicFn] = useAsyncFn(personalizedApis.getPersonalizedNewMusic)
-  const { value: music = [], loading } = state
+    const [state, getPersonalizedNewMusicFn] = useAsyncFn(personalizedApis.getPersonalizedNewMusic)
+    const { value: music = [], loading } = state
 
-  useEffect(() => {
-    getPersonalizedNewMusicFn()
-  }, [])
+    useEffect(() => {
+        getPersonalizedNewMusicFn()
+    }, [])
 
-  return (
-    <div className={styles.root}>
-      <LinkTitle title='最新音乐' route={ROUTES.LATEST_MUSIC} />
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className={styles.content}>
-          <div className={styles.block}>
-            {music.slice(0, 5).map(({ id, name, picUrl, song, ...others }, index) => (
-              <MusicItem key={name} index={index} id={id} name={name} picUrl={picUrl} song={song} {...others} />
-            ))}
-          </div>
-          <div className={styles.block}>
-            {music.slice(5, 10).map(({ id, name, picUrl, song, ...others }, index) => (
-              <MusicItem key={name} index={index + 5} id={id} name={name} picUrl={picUrl} song={song} {...others} />
-            ))}
-          </div>
+    return (
+        <div className={styles.root}>
+            <LinkTitle title='最新音乐' route={ROUTES.LATEST_MUSIC} />
+            {loading ? (
+                <Spinner />
+            ) : (
+                <div className={styles.content}>
+                    <div className={styles.block}>
+                        {music.slice(0, 5).map(({ id, name, picUrl, song, ...others }, index) => (
+                            <MusicItem
+                                key={name}
+                                index={index}
+                                id={id}
+                                name={name}
+                                picUrl={picUrl}
+                                song={song}
+                                {...others}
+                            />
+                        ))}
+                    </div>
+                    <div className={styles.block}>
+                        {music.slice(5, 10).map(({ id, name, picUrl, song, ...others }, index) => (
+                            <MusicItem
+                                key={name}
+                                index={index + 5}
+                                id={id}
+                                name={name}
+                                picUrl={picUrl}
+                                song={song}
+                                {...others}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  )
+    )
 }
 
 export default LatestMusic

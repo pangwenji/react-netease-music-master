@@ -8,45 +8,45 @@ const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
 
 export const ACTIONS = {
-  LOGIN,
-  LOGOUT,
+    LOGIN,
+    LOGOUT,
 }
 
 export interface IState {
-  isLogined: boolean
-  user: ILoginResult
+    isLogined: boolean
+    user: ILoginResult
 }
 
 const session = sessionLocalStorage.getItem()
 
 export const initialState = {
-  isLogined: !!session.userId,
-  user: session,
+    isLogined: !!session.userId,
+    user: session,
 }
 
 const logReducer = (state: IState, action: IAction) => {
-  switch (action.type) {
-    case ACTIONS.LOGIN: {
-      sessionLocalStorage.setItem(action.payload?.user)
+    switch (action.type) {
+        case ACTIONS.LOGIN: {
+            sessionLocalStorage.setItem(action.payload?.user)
 
-      return {
-        ...state,
-        isLogined: true,
-        user: action.payload?.user,
-      }
-    }
-    case ACTIONS.LOGOUT: {
-      sessionLocalStorage.removeItem()
+            return {
+                ...state,
+                isLogined: true,
+                user: action.payload?.user,
+            }
+        }
+        case ACTIONS.LOGOUT: {
+            sessionLocalStorage.removeItem()
 
-      return {
-        ...state,
-        isLogined: false,
-        user: {},
-      }
+            return {
+                ...state,
+                isLogined: false,
+                user: {},
+            }
+        }
+        default:
+            return state
     }
-    default:
-      return state
-  }
 }
 
 export default logReducer

@@ -6,14 +6,14 @@ import { formatTime } from 'helpers/time'
 const { useContext, useMemo } = React
 
 const AudioTimer = () => {
-  const audioInfo = useContext(AudioContext)
-  const { state } = audioInfo
+    const audioInfo = useContext(AudioContext)
+    const { state } = audioInfo
 
-  const time = useMemo(() => {
-    return `${formatTime(state?.time)} / ${formatTime(state?.duration)}`
-  }, [state?.time, state?.duration])
+    const time = useMemo(() => {
+        return `${formatTime(state?.time)} / ${formatTime(state?.duration)}`
+    }, [state?.time, state?.duration])
 
-  return <div>{time}</div>
+    return <div>{time}</div>
 }
 
 export default AudioTimer

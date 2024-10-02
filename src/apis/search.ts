@@ -8,40 +8,40 @@ type SearchSuggestFn = (params: ISearchSuggestRequest) => Promise<ISearchSuggest
 type SearchFn = (params: ISearchRequest) => Promise<any>
 
 const searchHot: SearchHotFn = async () => {
-  const response = await axios({
-    url: '/search/hot',
-  })
+    const response = await axios({
+        url: '/search/hot',
+    })
 
-  return response?.result?.hots
+    return response?.result?.hots
 }
 
 const searchSuggest: SearchSuggestFn = async ({ keywords }) => {
-  const response = await axios({
-    url: '/search/suggest',
-    params: {
-      keywords,
-    },
-  })
+    const response = await axios({
+        url: '/search/suggest',
+        params: {
+            keywords,
+        },
+    })
 
-  return response.result
+    return response.result
 }
 
 const search: SearchFn = async ({ keywords, type = TARGET_TYPE.MUSIC, limit = PAGE_SIZE, offset = 0 }) => {
-  const response = await axios({
-    url: '/search',
-    params: {
-      keywords,
-      type,
-      limit,
-      offset,
-    },
-  })
+    const response = await axios({
+        url: '/search',
+        params: {
+            keywords,
+            type,
+            limit,
+            offset,
+        },
+    })
 
-  return response.result
+    return response.result
 }
 
 export default {
-  searchHot,
-  searchSuggest,
-  search,
+    searchHot,
+    searchSuggest,
+    search,
 }

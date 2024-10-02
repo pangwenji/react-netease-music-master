@@ -4,6 +4,6 @@ import { ILoginResult } from 'apis/types/auth'
 const KEY = '__session'
 
 export const sessionLocalStorage = localStorageFactory<ILoginResult>({
-  key: KEY,
-  defaultValue: DEFAULT_VALUE.OBJECT,
+    key: KEY,
+    defaultValue: DEFAULT_VALUE.OBJECT,
 })
