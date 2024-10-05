@@ -93,3 +93,49 @@ pnpm run dev:local
 ```
 
 -   最后在浏览器中访问：`http://localhost:8080`
+
+
+1. 安装 Husky 和 lint-staged 
+
+2. 初始化 Husky
+    npx husky install
+
+这会在项目根目录下创建一个 .husky/ 文件夹，用于存放 Git hooks。接下来，把 Husky 自动挂载在 postinstall 脚本中，确保每次安装依赖时都会自动设置：
+
+
+{
+  "scripts": {
+    "postinstall": "husky install"
+  }
+}
+
+3. 添加预提交钩子
+npx husky add .husky/pre-commit "npx lint-staged"
+
+这将在 .husky/pre-commit 文件中添加一个默认的钩子，用于在提交前运行 lint-staged。现在我们将配置 lint-staged。
+
+4. 配置 lint-staged
+
+4. 配置 lint-staged
+在 package.json 中添加 lint-staged 配置来指定哪些文件可以被提交，哪些需要格式化或检查。以下是一个示例配置：
+
+json
+复制代码
+{
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",    // 对所有 JavaScript 文件运行 ESLint 并自动修复
+      "prettier --write", // 运行 Prettier 格式化
+      "git add"           // 确保修改后的文件被加入提交
+    ],
+    "*.css": [
+      "stylelint --fix", // 对 CSS 文件运行 stylelint
+      "git add"
+    ],
+    "*.md": [
+      "prettier --write", // 对 Markdown 文件运行 Prettier 格式化
+      "git add"
+    ],
+    "*": "git add"       // 添加所有被修改的文件
+  }
+}

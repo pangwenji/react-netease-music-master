@@ -49,6 +49,9 @@
         }
     },
     "lint-staged": {
+        "*.js": ["eslint --fix", "git add"],
+        "*.ts": ["eslint --fix", "git add"],
+        "*.css": ["stylelint --fix", "git add"],
         "src/**/*.{js,jsx,ts,tsx}": [
             "eslint --fix"
         ],
@@ -83,8 +86,8 @@
         "eslint-plugin-prettier": "^3.1.4",
         "eslint-plugin-react": "^7.20.6",
         "html-webpack-plugin": "^5.0.0-alpha.10",
-        "husky": "^4.2.5",
-        "lint-staged": "^10.2.13",
+        "husky": "^9.1.6",
+        "lint-staged": "^10.5.4",
         "mini-css-extract-plugin": "^1.1.0",
         "postcss-loader": "^3.0.0",
         "postcss-nested": "^4.2.1",
